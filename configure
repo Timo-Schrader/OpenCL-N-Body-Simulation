@@ -1,0 +1,9 @@
+#!/bin/bash
+echo -e '\033[0;31mMake sure to run this script with sufficient user rights.\033[0m'
+echo -e '\033[0;31mRun this script with '-a' to install additional tools.\033[0m'
+apt-get update
+apt-get install -y gcc g++ make cmake libboost-all-dev ocl-icd-opencl-dev libglew-dev freeglut3-dev mesa-utils libglew-dev libomp-dev
+
+if [[ $1 == "-a" ]]; then
+  apt-get install doxygen
+fi

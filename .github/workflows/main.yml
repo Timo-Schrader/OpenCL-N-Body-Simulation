@@ -1,0 +1,40 @@
+name: Clean Build on Linux/Ubuntu
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Adding permissions for executing configure file
+        run: chmod +x ./configure
+
+      - name: Installing necessary libraries
+        run: sudo ./configure
+
+      - name: Running cmake (default)
+        run: cmake CMakeLists.txt
+
+      - name: Running make (default)
+        run: make -j8
+
+      - name: Remove Build Folder
+        run: rm -rf build
+
+      - name: Running cmake (SIMD enabled)
+        run: cmake CMakeLists.txt -DENABLE_SIMD:String="1"
+
+      - name: Running make (SIMD enabled)
+        run: make -j8
+
+      - name: Remove Build Folder
+        run: rm -rf build
+
+      - name: Running cmake (OpenMP enabled)
+        run: cmake CMakeLists.txt -DENABLE_OPENMP:String="1"
+
+      - name: Running make (OpenMP enabled)
+        run: make -j8
